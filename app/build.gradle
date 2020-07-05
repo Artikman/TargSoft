@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    defaultConfig {
+        applicationId "com.example.kittytinder"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled = true
+            minifyEnabled false
+        }
+
+        release {
+            testCoverageEnabled = false
+            minifyEnabled true
+        }
+    }
+
+    testOptions.unitTests.all {
+        useJUnitPlatform()
+
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        }
+    }
+
+}
+
+dependencies {
+    //Android dependencies
+    implementation deps.support.constraint_layout
+    implementation deps.support.lifecycle_extensions
+    implementation deps.support.appcompat
+    implementation deps.support.recyclerview
+    implementation deps.support.cardview
+    implementation deps.support.core_utils
+    implementation deps.support.design
+    implementation deps.support.core_ktx
+    implementation deps.support.annotations
+
+    //kotlin
+    implementation deps.kotlin.stdlib
+    testImplementation deps.kotlin.test
+    implementation deps.kotlin.coroutines_core
+    implementation deps.kotlin.coroutines_android
+
+    //retrofit
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.converter
+
+    //dagger
+    implementation deps.dagger.dagger
+    kapt deps.dagger.dagger_compiler
+    implementation deps.dagger.android_support
+    kapt deps.dagger.android_processor
+
+    //moshi
+    implementation deps.moshi.moshi
+
+    //glide
+    implementation deps.glide.runtime
+    kapt deps.glide.compiler
+
+    //card stack view
+    implementation deps.cardStackView.card
+
+    //rounded image view
+    implementation deps.roundedImageView.roundView
+
+    //room
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+
+    //test
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockk
+    androidTestImplementation deps.test.runner
+
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+
+}
